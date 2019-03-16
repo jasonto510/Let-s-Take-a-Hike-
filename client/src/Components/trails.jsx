@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import ShowTrails from './ShowTrails.jsx'
+import React from 'react'
 
 class Trails extends React.Component {
   constructor(){
@@ -9,14 +10,15 @@ class Trails extends React.Component {
       location: [],
       showTrails : [],
       apiReqTrails: [],
-      currentLocation : 'Yosemite Valley, California'
+      currentLocation : 'Yosemite Valley, California',
+      maxResults : 10,
+      maxDistance: 10
     }    
     this.getHikingTrailsAPI = this.getHikingTrailsAPI.bind(this);
     this.postHikingTrails = this.postHikingTrails.bind(this);
     // this.splitCities = this.splitCities.bind(this);
     this.getHikingTrail = this.getHikingTrail.bind(this);
     this.getLocationInformation = this.getLocationInformation.bind(this);
-    this.getNewTrailAPI = this.getNewTrailAPI.bind(this);
     this.getNewArea = this.getNewArea.bind(this);
     this.getNewTrails = this.getNewTrails.bind(this);
     this.getNewHikingLocation = this.getNewHikingLocation.bind(this);
@@ -43,14 +45,15 @@ class Trails extends React.Component {
 
   getNewHikingLocation(event){
     event.preventDefault()
-    let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=500'
+    let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=' + this.state.maxDistance + '&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=' + this.state.maxResults
     console.log(url)
-    // $.get(url, (trails) => {
-    //   console.log(trails);
-    //   this.setState({
-    //     apiReqTrails : trails
-    //   })
-    // })
+    alert('Searching for queries')
+    $.get(url, (trails) => {
+      console.log(trails);
+      this.setState({
+        apiReqTrails : trails
+      })
+    })
   }
 
   
@@ -91,16 +94,6 @@ class Trails extends React.Component {
 
 
 
-  getNewTrailAPI(event){
-    event.preventDefault()
-    $.get('https://www.hikingproject.com/data/get-trails?lat=37.7749&lon=-122.4194&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=500', (trails) => {
-      console.log(trails);
-      this.setState({
-        apiReqTrails : trails
-      })
-    })
-  }  
-
   postHikingTrails(event){
     event.preventDefault();
     console.log(this.state.apiReqTrails)
@@ -116,7 +109,9 @@ class Trails extends React.Component {
         summary: hikingTrails[i].summary,
         location: hikingTrails[i].location,
         length: hikingTrails[i].length,
-        stars: hikingTrails[i].stars
+        stars: hikingTrails[i].stars,
+        longitude: hikingTrails[i].longitude, 
+        latitude: hikingTrails[i].latitude
       }
       console.log(newTrail)
       $.ajax({
@@ -163,27 +158,31 @@ class Trails extends React.Component {
           {this.state.showTrails.map(trails => {
             return <ShowTrails trails={trails}/>
           })}
-          <div style={{fontWeight: 'bold'}}> 
-            Difficulty
-            <br/>
-            Green : Easy 
-            <br/>
-            Blue : Medium 
-            <br/>
-            Black : Hard
-          </div>
-        </div>  
-        <div>
-          <form>
-            <div><name>Longitude</name><input type="text" id="lat" onChange={this.getNewArea}></input></div>
-            <div><name>Latitude</name><input type="text" id="long" onChange={this.getNewArea}></input></div>
-            <div><name>Radius</name><input type="text" id="radius" onChange={this.getNewArea}></input></div>
-            <div><name>Max Results</name><input type="text" id="MaxResults" onChange={this.getNewArea}></input></div>
-          </form>
-            <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button>
-            <button onClick={this.postHikingTrails}>Save Trail Information</button>
-            <button onClick={this.getNewHikingLocation}></button>        
-        </div>  
+          <div>
+            <div style={{fontWeight: 'bold', float: "left", margin: "auto", border: "5px solid black", padding: "10px"}}> 
+              Difficulty
+              <br/>
+              <div style={{backgroundColor: "green", color: "white"}}>Green : Easy  </div>
+              <div style={{backgroundColor: "Blue", color: "white"}}>Blue : Medium  </div>
+              <div style={{backgroundColor: "Black", color: "white"}}>Black : Hard </div>
+            </div>
+          </div>  
+          <div style={{float: "right", margin: "auto", border: "5px solid black", padding: "10px"}}>
+            <form>
+              Want to find a new trail?
+              <div><name style={{float: "left"}}>Longitude</name><input type="text" id="long" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+              <br/>
+              <div><name style={{float: "left"}}>Latitude</name><input type="text" id="lat" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+              <br/>
+              <div><name style={{float: "left"}}>Radius</name><input type="text" id="maxDistance" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+              <br/>
+              <div><name style={{float: "left"}}>Max Results</name><input type="text" id="maxResults" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+            </form>
+              <button onClick={this.getNewHikingLocation}>Get Hiking Information</button>        
+              <button onClick={this.postHikingTrails}>Save Trail Information</button>
+              {/* <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button> */}
+          </div>  
+        </div>
       </div>
     )
   }

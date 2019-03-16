@@ -1,5 +1,7 @@
+import React from 'react'
 import Trails from './trails.jsx'
 import facts from './hikingFacts.jsx'
+
 
 class HomePage extends React.Component {
     constructor(props){
@@ -56,9 +58,12 @@ class HomePage extends React.Component {
     }
 
     render() {
+   
+      
       return(
          <div>
           <div style={{margin: "auto", width: "50%", border: "5px solid green", padding: "10px"}}>
+          <div></div>
           <div style={{textAlign : "center"}}>
             Let's take a hike! You're next adventure awaits!
           </div>
@@ -90,3 +95,15 @@ class HomePage extends React.Component {
 }
 
 export default HomePage
+
+
+
+
+// {/* <Marker onClick={this.onMarkerClick}
+// name={'Current location'} />
+
+// <InfoWindow onClose={this.onInfoWindowClose}>
+// <div>
+// {/* <h1>{this.state.selectedPlace.name}</h1> */}
+// </div>
+// </InfoWindow> */}

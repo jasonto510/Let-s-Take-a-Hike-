@@ -9,7 +9,9 @@ const trailSchema = new mongoose.Schema({
   summary: String,
   location: String,
   length: Number,
-  stars: Number
+  stars: Number,
+  longitude: Number,
+  latitude : Number
 });
 
 const Trails = mongoose.model('Trails', trailSchema);
