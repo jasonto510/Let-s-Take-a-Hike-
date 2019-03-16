@@ -1,26 +1,16 @@
 const Trails = require('./trail.js');
 
 exports.getAllTrails = (callback) => {
-  console.log('this is getitng hit')
-  Trails.find({}, (err, trail) => {
-      if (err){
-          console.log(err);
-          callback(err, null)
-          return;
-      }
-      callback(null, trail)
-  })
+  Trails
+  .find({})
+  .exec(callback)
 }
 
-exports.getSingleLocation = (location, callback) => {
-  Trails.find({location: location}, (err, trail) => {
-    if (err){
-      console.log(err)
-      callback(err, null)
-      return;
-    }
-    callback(null, trail)
-  })
+exports.getSingleLocation = (newLocation, callback) => {
+  console.log(`this is geting hit "${newLocation}"`)
+  Trails
+    .find({location: newLocation})
+    .exec(callback)
 }
 
 exports.addTrail = (newTrail) => {

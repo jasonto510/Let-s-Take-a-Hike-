@@ -15,7 +15,6 @@ class Trails extends React.Component {
     // this.splitCities = this.splitCities.bind(this);
     this.getHikingTrail = this.getHikingTrail.bind(this);
     this.getLocationInformation = this.getLocationInformation.bind(this);
-    this.getSingleTrail = this.getSingleTrail.bind(this);
   }
 
   componentDidMount(){
@@ -47,10 +46,6 @@ class Trails extends React.Component {
           showTrails: intialLocation
       })
     })    
-  }
-
-  getSingleTrail(){
-
   }
 
   getHikingTrailsAPI(longitude, latitude){
@@ -95,6 +90,12 @@ class Trails extends React.Component {
 
   getLocationInformation(){
     console.log(event.target.value)
+    let newLocation = event.target.value
+    $.get(`http://localhost:3001/singleTrail/${newLocation}`, (trails) => {
+      this.setState({
+        showTrails: trails
+      })
+    })    
   }
 //   splitCities(){
 //     (this.state.sentTrailReq ? 

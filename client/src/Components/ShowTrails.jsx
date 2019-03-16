@@ -20,9 +20,10 @@ class ShowTrails extends React.Component {
   }
 
   favoriteTrail(){
-    // this.setState({
-    //   favorite: this.props.trails.id
-    // })
+    console.log(this.props.trails.hikeId)
+    this.setState({
+      favorite: this.props.trails.hikeId
+    })
   }
 
 
