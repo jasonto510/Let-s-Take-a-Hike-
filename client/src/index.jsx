@@ -1,3 +1,4 @@
-import Trails from './Components/trails.jsx'
+import HomePage from './Components/HomePage.jsx'
+// import Map from './Components/maps.jsx'
 
-ReactDOM.render(<Trails/>, document.getElementById('Trails'));
+ReactDOM.render(<HomePage/>, document.getElementById('Trails'));

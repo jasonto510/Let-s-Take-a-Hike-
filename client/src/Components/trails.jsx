@@ -6,21 +6,53 @@ class Trails extends React.Component {
     super()
     this.state = {
       hikingTrails : [],
-      sentTrailReq: false,
       location: [],
-      showTrails : []
+      showTrails : [],
+      apiReqTrails: [],
+      currentLocation : 'Yosemite Valley, California'
     }    
-    // this.getHikingTrailsAPI = this.getHikingTrailsAPI.bind(this);
+    this.getHikingTrailsAPI = this.getHikingTrailsAPI.bind(this);
     this.postHikingTrails = this.postHikingTrails.bind(this);
     // this.splitCities = this.splitCities.bind(this);
     this.getHikingTrail = this.getHikingTrail.bind(this);
     this.getLocationInformation = this.getLocationInformation.bind(this);
+    this.getNewTrailAPI = this.getNewTrailAPI.bind(this);
+    this.getNewArea = this.getNewArea.bind(this);
+    this.getNewTrails = this.getNewTrails.bind(this);
+    this.getNewHikingLocation = this.getNewHikingLocation.bind(this);
   }
 
   componentDidMount(){
     // this.getHikingTrailsAPI()
+    console.log(this.props.username)
     this.getHikingTrail()
   }
+
+  getNewTrails(){
+
+  }
+
+  getNewArea(event){
+    event.preventDefault()
+    this.setState({
+      [event.target.id] : event.target.value
+    })
+  }
+
+
+
+  getNewHikingLocation(event){
+    event.preventDefault()
+    let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=500'
+    console.log(url)
+    // $.get(url, (trails) => {
+    //   console.log(trails);
+    //   this.setState({
+    //     apiReqTrails : trails
+    //   })
+    // })
+  }
+
   
   getHikingTrail(){
     $.get('http://localhost:3001/hikingTrails', (trails) => {
@@ -41,29 +73,40 @@ class Trails extends React.Component {
       console.log(location);
       this.setState({
           hikingTrails : trails,
-          sentTrailReq: true,
           location: location,
           showTrails: intialLocation
       })
     })    
   }
 
-  getHikingTrailsAPI(longitude, latitude){
-    $.get('https://www.hikingproject.com/data/get-trails?lat=37.7749&lon=-122.4194&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=100', (trails) => {
-      let cities = {};
+  getHikingTrailsAPI(event){
+    event.preventDefault()
+    $.get('https://www.hikingproject.com/data/get-trails?lat=37.7749&lon=-122.4194&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=500', (trails) => {
+      console.log(trails);
       this.setState({
-          hikingTrails : trails.trails,
-          sentTrailReq: true
+        apiReqTrails : trails
       })
     })
   }
 
+
+
+  getNewTrailAPI(event){
+    event.preventDefault()
+    $.get('https://www.hikingproject.com/data/get-trails?lat=37.7749&lon=-122.4194&maxDistance=200&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=500', (trails) => {
+      console.log(trails);
+      this.setState({
+        apiReqTrails : trails
+      })
+    })
+  }  
+
   postHikingTrails(event){
     event.preventDefault();
-    console.log(this.state.hikingTrails)
-    let hikingTrails = this.state.hikingTrails;
+    console.log(this.state.apiReqTrails)
+    let hikingData = this.state.apiReqTrails;
+    let hikingTrails = hikingData.trails
     for (var i = 0; i < hikingTrails.length; i++) {
-      console.log(i)
       let newTrail = {
         hikeId: hikingTrails[i].id,
         name: hikingTrails[i].name,
@@ -75,6 +118,7 @@ class Trails extends React.Component {
         length: hikingTrails[i].length,
         stars: hikingTrails[i].stars
       }
+      console.log(newTrail)
       $.ajax({
         type: "POST",
         url: "http://localhost:3001/hikingTrails",
@@ -93,7 +137,8 @@ class Trails extends React.Component {
     let newLocation = event.target.value
     $.get(`http://localhost:3001/singleTrail/${newLocation}`, (trails) => {
       this.setState({
-        showTrails: trails
+        showTrails: trails,
+        currentLocation : newLocation
       })
     })    
   }
@@ -107,27 +152,38 @@ class Trails extends React.Component {
   render(){
     return(
       <div>
-        <div>Welcome! </div>
-        <button onClick={this.postHikingTrails}>Save Trail Information</button>
-        {this.state.sentTrailReq ? 
+        <div>Welcome! {this.props.username}</div>
         <div>
           <select onChange={this.getLocationInformation} className="location">
           {Object.keys(this.state.location).map(location => {
             return <option>{location}</option>
           })}
             </select>
+            <div style={{fontWeight: 'bold', fontSize: '24px'}}>{this.state.currentLocation}</div>
           {this.state.showTrails.map(trails => {
-            console.log(trails, 'here are trails')
             return <ShowTrails trails={trails}/>
           })}
           <div style={{fontWeight: 'bold'}}> 
-            Difficulty 
+            Difficulty
+            <br/>
             Green : Easy 
-            Blue : Medium
+            <br/>
+            Blue : Medium 
+            <br/>
             Black : Hard
           </div>
         </div>  
-        : null}
+        <div>
+          <form>
+            <div><name>Longitude</name><input type="text" id="lat" onChange={this.getNewArea}></input></div>
+            <div><name>Latitude</name><input type="text" id="long" onChange={this.getNewArea}></input></div>
+            <div><name>Radius</name><input type="text" id="radius" onChange={this.getNewArea}></input></div>
+            <div><name>Max Results</name><input type="text" id="MaxResults" onChange={this.getNewArea}></input></div>
+          </form>
+            <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button>
+            <button onClick={this.postHikingTrails}>Save Trail Information</button>
+            <button onClick={this.getNewHikingLocation}></button>        
+        </div>  
       </div>
     )
   }

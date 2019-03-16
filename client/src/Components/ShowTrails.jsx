@@ -1,9 +1,14 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import GoogleMapReact from 'google-maps-react'
+
 class ShowTrails extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       getSummary: false,
-      favorite: ''
+      favorite: '',
+      isFavorite: 'Favorite'
     }
     this.showSummary = this.showSummary.bind(this);
     this.favoriteTrail = this.favoriteTrail.bind(this);
@@ -12,6 +17,7 @@ class ShowTrails extends React.Component {
   componentDidMount(){
     console.log(this.props.trails.name)
   }
+
   showSummary(event){
     event.preventDefault();
     this.setState({
@@ -21,8 +27,15 @@ class ShowTrails extends React.Component {
 
   favoriteTrail(){
     console.log(this.props.trails.hikeId)
+    let favoriteStatus = null;
+    if (this.state.isFavorite === 'Favorite'){
+      favoriteStatus = 'Unfavorite'
+    } else{
+      favoriteStatus = 'Favorite'
+    }
     this.setState({
-      favorite: this.props.trails.hikeId
+      favorite: this.props.trails.hikeId,
+      isFavorite: favoriteStatus
     })
   }
 
@@ -33,9 +46,9 @@ class ShowTrails extends React.Component {
         <div>
           <li onClick={this.showSummary} style={{float : 'left'}}>
             <span style={{fontWeight: 'bold'}}>{this.props.trails.name}, </span>
-            <span>{this.props.trails.location}, Difficulty: {this.props.trails.difficulty}, Rating: {this.props.trails.stars}  </span>
+            <span>{' '} Difficulty: {this.props.trails.difficulty}, Rating: {this.props.trails.stars}  </span>
           </li>
-          <button style={{float : 'right', marginRight: "25px"}} onClick={this.favoriteTrail}>Favorite </button>
+          <button style={{float : 'right', marginRight: "25px"}} onClick={this.favoriteTrail}> {this.state.isFavorite} </button>
           <br/>
           {this.state.getSummary ? 
           <div style={{marginLeft: '30px'}}> 
