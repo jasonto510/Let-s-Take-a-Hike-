@@ -59,7 +59,7 @@ class HomePage extends React.Component {
 
     render() {
    
-      
+      // style={{backgroundImage: "linear-gradient(to bottom right, green, yellow)"}}
       return(
          <div>
           <div style={{margin: "auto", width: "50%", border: "5px solid green", padding: "10px"}}>
