@@ -16,9 +16,7 @@ class Gear extends React.Component {
     this.gotGear = this.gotGear.bind(this);
   }
 
-  gotGear(event){
-    //Iterate through the array, if the name matches splice it out  
-    // style = {textDecoration: "lineThrough"}
+  gotGear(event) {
     event.preventDefault();
     let strikeThrough = "line-through"
     if (this.state.strikethrough.textDecoration === "line-through"){

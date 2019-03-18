@@ -32,7 +32,9 @@ class ShowTrails extends React.Component {
       weather : [],
       showWeather: false,
       descriptionModalOpen: false,
-      description: this.props.trails.summary
+      description: this.props.trails.summary,
+      nameClicked: false,
+      style : {fontWeight: 'bold'}
     }
     this.showSummary = this.showSummary.bind(this);
     // this.favoriteTrail = this.favoriteTrail.bind(this);
@@ -44,6 +46,7 @@ class ShowTrails extends React.Component {
     this.changeDescription = this.changeDescription.bind(this);
     this.closeDescriptionModal = this.closeDescriptionModal.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
+    this.italicizeName = this.italicizeName.bind(this);
   }
 
   componentDidMount(){
@@ -135,6 +138,20 @@ class ShowTrails extends React.Component {
     })
   }
 
+  italicizeName(event){
+    // fontStyle: 'italic'
+    event.preventDefault();
+    let style = {fontWeight: 'bold'}
+    if (!this.state.style.fontStyle){
+      style = {fontWeight: 'bold', fontStyle: 'italic'}
+    }
+    this.setState({
+      nameClicked : !this.state.nameClicked,
+      style : style
+    })
+
+  }
+
   render(){
     const style = {
       width: '100%',
@@ -142,10 +159,10 @@ class ShowTrails extends React.Component {
     }     
     return(
         <div>
-          <li onClick={this.showSummary} style={{float : 'left'}}>
-            <span style={{fontWeight: 'bold'}}>{this.props.trails.name}, </span>
+          <div onClick={this.showSummary} style={{float : 'left'}}>
+            <span style={this.state.style} onClick={this.italicizeName}>{this.props.trails.name}, </span>
             <span>{' '} Difficulty: {this.props.trails.difficulty}, Rating: {this.props.trails.stars}  </span>
-          </li>
+          </div>
           <div style={{float: "right", position: "relative"}}>
             <button onClick={this.openMapModal}>Open on Maps</button>
 

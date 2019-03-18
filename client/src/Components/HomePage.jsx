@@ -3,6 +3,7 @@ import Trails from './trails.jsx'
 import facts from './hikingFacts.jsx'
 import $ from 'jquery'
 import NextTrip from './NextTrip.jsx'
+import CurrentTrip from './CurrentTrip.jsx'
 
 
 class HomePage extends React.Component {
@@ -25,6 +26,7 @@ class HomePage extends React.Component {
       this.getNewHikingLocation = this.getNewHikingLocation.bind(this);
       this.postHikingTrails = this.postHikingTrails.bind(this);
       this.planTrip = this.planTrip.bind(this);
+      this.getCurrentHike = this.getCurrentHike.bind(this);
       // this.tryToGetTrail = this.tryToGetTrail.bind(this);
     }
 
@@ -35,6 +37,13 @@ class HomePage extends React.Component {
     //   //   console.log('this isnt breaking')
     //   // })
     // }
+
+    getCurrentHike(event){
+      event.preventDefault();
+      this.setState({
+        onTrailPage: "currentHike"
+      })
+    }
 
 
     getHomePage(event){
@@ -140,17 +149,18 @@ class HomePage extends React.Component {
    
       // style={{backgroundImage: "linear-gradient(to bottom right, green, yellow)"}}
       return(
-         <div>
-          <div style={{margin: "auto", width: "50%", border: "5px solid green", padding: "10px"}}>
+         <div style={{fontFamily: "Verdana"}}>
+          <div style={{margin: "auto", width: "50%", border: "10px olive", padding: "10px", backgroundColor: "green"}}>
             <div style={{textAlign : "center"}}>
-              Let's take a hike! You're next adventure awaits!
+              Let's take a hike! Your next adventure awaits!
             </div>
               <div style={{textAlign : "center"}}>
               <button onClick={this.getHomePage}> Homepage </button>
-              <button onClick={this.getTrailsInformation}> Hikes </button>
+              <button onClick={this.getTrailsInformation}> All Hikes </button>
+              <button onClick={this.getCurrentHike}>Hike</button> 
               <button onClick={this.planTrip}>Plan your next trip</button>
-              </div>
             </div>
+          </div>
 
           {this.state.onTrailPage === "home" ?  
           <div>
@@ -197,6 +207,12 @@ class HomePage extends React.Component {
               <NextTrip username={this.state.userName}/>
             </div>
           : null} 
+          {console.log(this.state.apiReqTrails)}
+          {this.state.onTrailPage === "currentHike" ? 
+          <div> 
+            <CurrentTrip trails={this.state.apiReqTrails}/>
+          </div>
+          : null}
         </div>
       )
     }
