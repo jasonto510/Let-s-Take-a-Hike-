@@ -30,8 +30,29 @@ app.get('/singleTrail/:location', (req, res) => {
   })
 })
 
+app.put('/changeDescription', (req, res) => {
+  controller.changeDescription(req.body, (err) => {
+    if (err){
+      console.log(err)
+      res.status(400).end();
+    }
+    res.status(200).end()
+  })
+})
+
+// app.get('/getTheTrail/:latitude/:longitude/:maxDistance/:maxResults', (req, res) => {
+//   let latitude = req.params.latitude;
+//   let longitude = req.params.longitude;
+//   let distance = req.params.maxDistance;
+//   let results = req.params.maxResults
+//   console.log(latitude, longitude, distance, results)
+//   res.status(200).end()
+// })
+
+
+
 app.post('/hikingTrails', (req, res) => {
-  controller.addTrail(req.body, (err, data) => {
+  controller.addTrail(req.body, (err) => {
       if (err){
           console.log(err)
           res.status(404).end()

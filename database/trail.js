@@ -11,7 +11,8 @@ const trailSchema = new mongoose.Schema({
   length: Number,
   stars: Number,
   longitude: Number,
-  latitude : Number
+  latitude : Number,
+  additionalInfo: {}
 });
 
 const Trails = mongoose.model('Trails', trailSchema);

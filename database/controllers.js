@@ -14,8 +14,8 @@ exports.getSingleLocation = (newLocation, callback) => {
 }
 
 exports.addTrail = (newTrail) => {
-    var trail = new Trails(newTrail);
-    trail.save((err, addedTrail)=> {
+    // var trail = new Trails(newTrail);
+    Trails.update({name: newTrail.name}, newTrail, {upsert: true}, (err)=> {
     if (err){
       console.log(err);
       return;
@@ -24,3 +24,16 @@ exports.addTrail = (newTrail) => {
     return
   })
 }
+
+exports.changeDescription = (changedTrail) => {
+  Trails.updateOne({_id: changedTrail._id}, {$set: {summary: changedTrail.summary}}, (err) => {
+    if (err){
+      console.log(err)
+      return
+    }
+    console.log("changed in database")
+    return;
+  })
+}
+
+
