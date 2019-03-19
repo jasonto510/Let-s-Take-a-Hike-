@@ -188,13 +188,13 @@ class HomePage extends React.Component {
                 <div style={style.newTrailContainer}>
                   <form>
                     Want to find a new trail?
-                    <div><label style={{float: "left"}}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <div><label style={style.leftFloat}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                     <br/>
-                    <div><label style={{float: "left"}}>Latitude</label><input type="text" id="lat" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <div><label style={style.leftFloat}>Latitude</label><input type="text" id="lat" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                     <br/>
-                    <div><label style={{float: "left"}}>Max Distance</label><input type="text" id="maxDistance" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <div><label style={style.leftFloat}>Max Distance</label><input type="text" id="maxDistance" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                     <br/>
-                    <div><label style={{float: "left"}}>Max Results</label><input type="text" id="maxResults" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <div><label style={style.leftFloat}>Max Results</label><input type="text" id="maxResults" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                   </form>
                     <button onClick={this.getNewHikingLocation}>Get Hiking Information</button>        
                     <button onClick={this.postHikingTrails}>Save Trail Information</button>

@@ -3,6 +3,7 @@ import ShowTrails from './ShowTrails.jsx'
 import React from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import key from '../../../config.js'
+import style from './style.css.js'
 
 
 class Trails extends React.Component {
@@ -54,9 +55,7 @@ class Trails extends React.Component {
       }
       if (this.props.trails.trails) {
         let newTrails = this.props.trails.trails
-        console.log(newTrails)
         for (var j = 0; j < newTrails.length; j++) {
-          console.log(newTrails[j])
           if (!location[newTrails[j].location]){
             location[newTrails[j].location] = [newTrails[j]];
           } else {
@@ -64,7 +63,6 @@ class Trails extends React.Component {
           }
         }
       }
-      console.log(this.props.trails)
       this.setState({
           hikingTrails : trails,
           location: location,
@@ -94,7 +92,7 @@ class Trails extends React.Component {
     return(
       <div>
         <div>Welcome! {this.props.username}</div>
-        <form style={{float : "right"}}>
+        <form style={style.rightFloat}>
           <input type="input" placeholder="Search" onChange={this.searchingForTrail}/>
         </form>
         <div>
@@ -103,17 +101,17 @@ class Trails extends React.Component {
             return <option>{location}</option>
           })}
             </select>
-            <div style={{fontWeight: 'bold', fontSize: '24px'}}>{this.state.currentLocation}</div>
+            <div style={style.boldFont}>{this.state.currentLocation}</div>
           {this.state.showTrails.map(trails => {
             return <ShowTrails trails={trails}/>
           })}
           <div>
-            <div style={{fontWeight: 'bold', float: "left", margin: "auto"}}> 
+            <div style={style.boldFloat}> 
               Difficulty
               <br/>
-              <div style={{color: "green"}}>Green : Easy  </div>
-              <div style={{color: "blue"}}>Blue : Medium  </div>
-              <div style={{color: "black"}}>Black : Hard </div>
+              <div style={style.green}>Green : Easy  </div>
+              <div style={style.blue}>Blue : Medium  </div>
+              <div style={style.black}>Black : Hard </div>
             </div>
           </div>  
         </div>

@@ -24,6 +24,27 @@ export default {
     margin: "auto", 
     backgroundColor: "AliceBlue", 
     fontWeight: "bold" 
+  },
+  leftFloat: {
+    float: "left"
+  },
+  boldFont : {
+    fontWeight: 'bold', 
+    fontSize: '24px'
+  },
+  boldFloat : {
+    fontWeight: 'bold', 
+    float: "left", 
+    margin: "auto"   
+  },
+  green : {
+    color: "green"  
+  },
+  black : {
+    color: "black"
+  },
+  blue : {
+    color: "blue"
   }
 
 }
