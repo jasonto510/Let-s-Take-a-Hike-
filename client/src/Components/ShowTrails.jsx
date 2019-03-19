@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import key from '../../../config.js'
-import Modal from 'react-modal'
-import $ from 'jquery'
+import key from '../../../config.js';
+import Modal from 'react-modal';
+import $ from 'jquery';
 
 const customStyles = {
   content : {
@@ -37,7 +37,7 @@ class ShowTrails extends React.Component {
       style : {fontWeight: 'bold'}
     }
     this.showSummary = this.showSummary.bind(this);
-    // this.favoriteTrail = this.favoriteTrail.bind(this);
+    this.favoriteTrail = this.favoriteTrail.bind(this);
     this.openMapModal = this.openMapModal.bind(this);
     this.closeMapModal = this.closeMapModal.bind(this);
     this.hoverLength = this.hoverLength.bind(this);
@@ -47,10 +47,6 @@ class ShowTrails extends React.Component {
     this.closeDescriptionModal = this.closeDescriptionModal.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
     this.italicizeName = this.italicizeName.bind(this);
-  }
-
-  componentDidMount(){
-    console.log(this.props.trails)
   }
 
   hoverLength(){
@@ -91,19 +87,20 @@ class ShowTrails extends React.Component {
     })
   }
 
-  // favoriteTrail(){
-  //   console.log(this.props.trails.hikeId)
-  //   let favoriteStatus = null;
-  //   if (this.state.isFavorite === 'Favorite'){
-  //     favoriteStatus = 'Unfavorite'
-  //   } else{
-  //     favoriteStatus = 'Favorite'
-  //   }
-  //   this.setState({
-  //     favorite: this.props.trails.hikeId,
-  //     isFavorite: favoriteStatus
-  //   })
-  // }
+  favoriteTrail(event){
+    event.preventDefault()
+    console.log(this.state.isFavorite)
+    let favoriteStatus = null;
+    if (this.state.isFavorite === 'Favorite'){
+      favoriteStatus = 'Unfavorite'
+    } else{
+      favoriteStatus = 'Favorite'
+    }
+    this.setState({
+      favorite: this.props.trails.hikeId,
+      isFavorite: favoriteStatus
+    })
+  }
 
   getWeatherReport(event){
     event.preventDefault()
@@ -139,7 +136,6 @@ class ShowTrails extends React.Component {
   }
 
   italicizeName(event){
-    // fontStyle: 'italic'
     event.preventDefault();
     let style = {fontWeight: 'bold'}
     if (!this.state.style.fontStyle){
@@ -163,9 +159,9 @@ class ShowTrails extends React.Component {
             <span style={this.state.style} onClick={this.italicizeName}>{this.props.trails.name}, </span>
             <span>{' '} Difficulty: {this.props.trails.difficulty}, Rating: {this.props.trails.stars}  </span>
           </div>
-          <div style={{float: "right", position: "relative"}}>
+          <div style={{float: "right"}}>
             <button onClick={this.openMapModal}>Open on Maps</button>
-
+            <button onClick={this.favoriteTrail}>{this.state.isFavorite}</button>
           </div>
             <Modal
               isOpen={this.state.mapModalOpen}
@@ -192,8 +188,10 @@ class ShowTrails extends React.Component {
           <br/>
           {this.state.getSummary ? 
           <div style={{marginLeft: '30px'}}> 
-            <div>
+            <button onClick={this.getWeatherReport} style={{float: "right", marginRight: '-152px'}}>Get Weather Report</button>
+            <div> {this.state.description} </div>
             <button style={{float: "right"}} onClick={this.openDescriptionModal}>Edit Description</button>
+            <div>
               <Modal
                 isOpen={this.state.descriptionModalOpen}
                 onRequestClose={this.closeDescriptionModal}
@@ -211,7 +209,6 @@ class ShowTrails extends React.Component {
                 <button onClick={this.submitEdit}>Confirm Edit</button>
               </div>
               </Modal>
-              <div> {this.state.description} </div>
             <div> Low: {this.props.trails.low} feet</div>
             <div> High: {this.props.trails.high} feet</div>
             <div>Total Elevation Gain: {this.props.trails.high - this.props.trails.low} feet</div>
@@ -219,7 +216,6 @@ class ShowTrails extends React.Component {
             {this.state.isHovering ? <div style={{fontWeight: 'bold'}}> Fun Fact: One mile is 5280. This trail is roughly {Math.round(this.props.trails.length * 5280)} feet. If the average person walks a mile in 15-30 minutes, it will take you a the average person {Math.round(this.props.trails.length * 15)} - {Math.round(this.props.trails.length * 30)} minutes
             </div> : null}
             </div>
-            <button onClick={this.getWeatherReport} >Get Weather Report</button>
           {this.state.showWeather ? 
             <div> 
               The temperature in {this.state.weather.city.name} is {Math.round((this.state.weather.list[0].main.temp - 273.15) * 9/5 + 32)} °F. It is {this.state.weather.list[0].main.sea_level} above sea level, has an atmospheric pressure of {this.state.weather.list[0].main.pressure}, humidity of {this.state.weather.list[0].main.humidity}, and {this.state.weather.list[0].weather[0].description}  

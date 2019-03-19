@@ -45,6 +45,21 @@ export default {
   },
   blue : {
     color: "blue"
+  },
+  relativeRightFloat : {
+    float: "right", 
+    position: "relative"
+  },
+  marginLeft : {
+    marginLeft: '30px'  
+  },
+  descriptionBox : {
+    width: "380px", 
+    height: "200px", 
+    wordWrap: 'break-word', 
+    wordBreak: 'break-all'  
+  },
+  bold : {
+    fontWeight : 'bold'
   }
-
 }

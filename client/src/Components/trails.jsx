@@ -92,7 +92,7 @@ class Trails extends React.Component {
     return(
       <div>
         <div>Welcome! {this.props.username}</div>
-        <form style={style.rightFloat}>
+        <form style={{ float: "right" }}>
           <input type="input" placeholder="Search" onChange={this.searchingForTrail}/>
         </form>
         <div>
@@ -101,22 +101,22 @@ class Trails extends React.Component {
             return <option>{location}</option>
           })}
             </select>
-            <div style={style.boldFont}>{this.state.currentLocation}</div>
+            <div style={{fontWeight: 'bold', fontSize: '24px'}}>{this.state.currentLocation}</div>
           {this.state.showTrails.map(trails => {
             return <ShowTrails trails={trails}/>
           })}
           <div>
-            <div style={style.boldFloat}> 
+            <div style={{fontWeight: 'bold', float: "left", margin: "auto"}}> 
               Difficulty
               <br/>
-              <div style={style.green}>Green : Easy  </div>
-              <div style={style.blue}>Blue : Medium  </div>
-              <div style={style.black}>Black : Hard </div>
+              <div style={{color: "green" }}>Green : Easy  </div>
+              <div style={{color: "blue"} }>Blue : Medium  </div>
+              <div style={{color: "black" }}>Black : Hard </div>
             </div>
           </div>  
         </div>
         <br/><br/><br/><br/><br/><br/><br/><br/>
-        {this.state.receivedData ?
+        {/* {this.state.receivedData ?
           <Map 
               google={this.props.google} 
               style={style}                
@@ -133,7 +133,7 @@ class Trails extends React.Component {
               />
             })}
             </Map>              
-          : null}
+          : null} */}
       </div>
     )
   }
