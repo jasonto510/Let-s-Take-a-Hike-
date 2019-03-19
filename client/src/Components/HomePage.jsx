@@ -1,9 +1,11 @@
-import React from 'react'
-import Trails from './trails.jsx'
-import facts from './hikingFacts.jsx'
-import $ from 'jquery'
-import NextTrip from './NextTrip.jsx'
-import CurrentTrip from './CurrentTrip.jsx'
+import React from 'react';
+import Trails from './trails.jsx';
+import facts from './hikingFacts.jsx';
+import $ from 'jquery';
+import NextTrip from './NextTrip.jsx';
+import CurrentTrip from './CurrentTrip.jsx';
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import style from './style.css.js'
 
 
 class HomePage extends React.Component {
@@ -27,6 +29,7 @@ class HomePage extends React.Component {
       this.postHikingTrails = this.postHikingTrails.bind(this);
       this.planTrip = this.planTrip.bind(this);
       this.getCurrentHike = this.getCurrentHike.bind(this);
+      this.searchTrail = this.searchTrail.bind(this);
       // this.tryToGetTrail = this.tryToGetTrail.bind(this);
     }
 
@@ -45,6 +48,12 @@ class HomePage extends React.Component {
       })
     }
 
+    searchTrail(event){
+      event.preventDefault();
+      this.setState({
+        onTrailPage: "search"
+      })
+    }
 
     getHomePage(event){
       event.preventDefault();
@@ -149,26 +158,24 @@ class HomePage extends React.Component {
    
       // style={{backgroundImage: "linear-gradient(to bottom right, green, yellow)"}}
       return(
-         <div style={{fontFamily: "Verdana"}}>
-          <div style={{margin: "auto", width: "100%", backgroundColor: "AliceBlue", height: "60px"}}>
-            <div style={{textAlign : "center", fontWeight: 'bold', fontSize: '24px'}}>
+         <div style={style.font}>
+          <div style={style.header}>
+            <div style={style.logo}>
               Take a Hike! Your next adventure awaits!
             </div>
-              <div style={{textAlign : "center"}}>
+              <div style={style.buttonContainer}>
               <button onClick={this.getHomePage} className="homeButton"> Homepage </button>
               <button onClick={this.getTrailsInformation} className="homeButton"> All Hikes </button>
-              <button onClick={this.getCurrentHike} className="homeButton">Hike</button> 
+              <button onClick={this.getCurrentHike} className="homeButton">Current Hike</button> 
               <button onClick={this.planTrip} className="homeButton">Plan your next trip</button>
             </div>
           </div>
-
           {this.state.onTrailPage === "home" ?  
           <div>
-            <button onClick={this.submitUserName} style={{float: "right"}}>{this.state.submitButton}</button>
+            <button onClick={this.submitUserName} style={style.rightFloat}>{this.state.submitButton}</button>
             {this.state.enterUserName ? 
-              <form style={{float:'right'}}>
-                <label>Name:</label>
-                <input type="text" value={this.state.userName} onChange={this.getUserName}/>
+              <form style={style.rightFloat}>
+                <input type="text" value={this.state.userName} onChange={this.getUserName} placeholder="Name"/>
               </form>
                : null
             }
@@ -178,7 +185,7 @@ class HomePage extends React.Component {
                   return <li>{fact}</li>
                 })}
     
-                <div style={{float: "right", margin: "auto", backgroundColor: "AliceBlue", fontWeight: "bold" }}>
+                <div style={style.newTrailContainer}>
                   <form>
                     Want to find a new trail?
                     <div><label style={{float: "left"}}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={{float: "right"}}></input></div>
@@ -191,7 +198,6 @@ class HomePage extends React.Component {
                   </form>
                     <button onClick={this.getNewHikingLocation}>Get Hiking Information</button>        
                     <button onClick={this.postHikingTrails}>Save Trail Information</button>
-                    {/* <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button> */}
                 </div>  
               </div> : null
               }
@@ -207,7 +213,6 @@ class HomePage extends React.Component {
               <NextTrip username={this.state.userName}/>
             </div>
           : null} 
-          {/* {console.log(this.state.apiReqTrails)} */}
           {this.state.onTrailPage === "currentHike" ? 
           <div> 
             <CurrentTrip trails={this.state.apiReqTrails}/>

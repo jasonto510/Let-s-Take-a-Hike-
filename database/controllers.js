@@ -6,12 +6,12 @@ exports.getAllTrails = (callback) => {
   .exec(callback)
 }
 
-exports.getSingleLocation = (newLocation, callback) => {
-  console.log(`this is geting hit "${newLocation}"`)
-  Trails
-    .find({location: newLocation})
-    .exec(callback)
-}
+// exports.getSingleLocation = (newLocation, callback) => {
+//   console.log(`this is geting hit "${newLocation}"`)
+//   Trails
+//     .find({location: newLocation})
+//     .exec(callback)
+// }
 
 exports.addTrail = (newTrail) => {
     // var trail = new Trails(newTrail);

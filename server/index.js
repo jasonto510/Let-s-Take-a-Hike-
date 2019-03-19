@@ -20,15 +20,15 @@ app.get('/hikingTrails', (req, res) => {
   })
 })
 
-app.get('/singleTrail/:location', (req, res) => {
-  let location = req.params.location;
-  controller.getSingleLocation(location, (err, trail) => {
-    if (err){
-      res.status(400).end()
-    }
-    res.status(200).send(trail);
-  })
-})
+// app.get('/singleTrail/:location', (req, res) => {
+//   let location = req.params.location;
+//   controller.getSingleLocation(location, (err, trail) => {
+//     if (err){
+//       res.status(400).end()
+//     }
+//     res.status(200).send(trail);
+//   })
+// })
 
 app.put('/changeDescription', (req, res) => {
   controller.changeDescription(req.body, (err) => {

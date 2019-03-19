@@ -47,10 +47,11 @@ class NextTrip extends React.Component{
     
   addGear(event) {
     event.preventDefault()
-    console.log(event.target.value)
-    this.setState({
+    if (event.target.value){
+      this.setState({
         gear: event.target.value
-    })
+      })
+    }
   }
 
   addRecommendation(event){

@@ -14,17 +14,27 @@ class Trails extends React.Component {
       showTrails : [],
       currentLocation : 'Bolinas, California',
       receivedData : false,
-      trailPoints : []
+      trailPoints : [],
+      searching : false
 
     }    
     this.getHikingTrail = this.getHikingTrail.bind(this);
     this.getLocationInformation = this.getLocationInformation.bind(this);
+    this.searchingForTrail = this.searchingForTrail.bind(this);
   }
 
 
 
   componentDidMount() {
     this.getHikingTrail()
+  }
+
+  searchingForTrail(event) {
+    event.preventDefault
+    console.log(event.target.value);
+    this.setState({
+      searching: true
+    })
   }
 
   
@@ -78,12 +88,15 @@ class Trails extends React.Component {
 
   render() {
     const style = {
-      width: '50%',
-      height: '50%'
+      width: '40%',
+      height: '40%'
     }     
     return(
       <div>
         <div>Welcome! {this.props.username}</div>
+        <form style={{float : "right"}}>
+          <input type="input" placeholder="Search" onChange={this.searchingForTrail}/>
+        </form>
         <div>
           <select onChange={this.getLocationInformation} className="location">
           {Object.keys(this.state.location).map(location => {

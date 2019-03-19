@@ -18,7 +18,8 @@
     "nodemon": "^1.18.9",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-modal": "^3.8.1"
+    "react-modal": "^3.8.1",
+    "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
