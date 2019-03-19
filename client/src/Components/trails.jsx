@@ -1,6 +1,9 @@
 import $ from 'jquery';
 import ShowTrails from './ShowTrails.jsx'
 import React from 'react'
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import key from '../../../config.js'
+
 
 class Trails extends React.Component {
   constructor(){
@@ -9,7 +12,9 @@ class Trails extends React.Component {
       hikingTrails : [],
       location: [],
       showTrails : [],
-      currentLocation : 'Bolinas, California'
+      currentLocation : 'Bolinas, California',
+      receivedData : false,
+      trailPoints : []
 
     }    
     this.getHikingTrail = this.getHikingTrail.bind(this);
@@ -32,34 +37,50 @@ class Trails extends React.Component {
           intialLocation.push(trails[i]);
         }
         if (!location[trails[i].location]){
-          location[trails[i].location] = 1
+          location[trails[i].location] = [trails[i]]
         } else{
-          location[trails[i].location] += 1
+          location[trails[i].location].push(trails[i])
         }
       }
-      console.log(location);
+      if (this.props.trails.trails) {
+        let newTrails = this.props.trails.trails
+        console.log(newTrails)
+        for (var j = 0; j < newTrails.length; j++) {
+          console.log(newTrails[j])
+          if (!location[newTrails[j].location]){
+            location[newTrails[j].location] = [newTrails[j]];
+          } else {
+            location[newTrails[j].location].push(newTrails[j])
+          }
+        }
+      }
+      console.log(this.props.trails)
       this.setState({
           hikingTrails : trails,
           location: location,
-          showTrails: intialLocation
+          showTrails: intialLocation,
+          receivedData: true,
+          trailPoints: intialLocation
       })
     })    
   }
 
 
   getLocationInformation(){
-    console.log(event.target.value)
     let newLocation = event.target.value
-    $.get(`http://localhost:3001/singleTrail/${newLocation}`, (trails) => {
-      this.setState({
-        showTrails: trails,
-        currentLocation : newLocation
-      })
-    })    
+    this.setState({
+      showTrails: this.state.location[newLocation],
+      currentLocation : newLocation,
+      trailPoints : this.state.location[newLocation]
+    })
   }
 
 
   render() {
+    const style = {
+      width: '50%',
+      height: '50%'
+    }     
     return(
       <div>
         <div>Welcome! {this.props.username}</div>
@@ -74,18 +95,39 @@ class Trails extends React.Component {
             return <ShowTrails trails={trails}/>
           })}
           <div>
-            <div style={{fontWeight: 'bold', float: "left", margin: "auto", border: "5px solid black", padding: "10px"}}> 
+            <div style={{fontWeight: 'bold', float: "left", margin: "auto"}}> 
               Difficulty
               <br/>
-              <div style={{backgroundColor: "green", color: "white"}}>Green : Easy  </div>
-              <div style={{backgroundColor: "Blue", color: "white"}}>Blue : Medium  </div>
-              <div style={{backgroundColor: "Black", color: "white"}}>Black : Hard </div>
+              <div style={{color: "green"}}>Green : Easy  </div>
+              <div style={{color: "blue"}}>Blue : Medium  </div>
+              <div style={{color: "black"}}>Black : Hard </div>
             </div>
-          </div>    
+          </div>  
         </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        {this.state.receivedData ?
+          <Map 
+              google={this.props.google} 
+              style={style}                
+              initialCenter={{
+                lat: this.state.trailPoints[0].latitude,
+                lng: this.state.trailPoints[0].longitude
+              }}
+              zoom={8}>
+              {this.state.trailPoints.map(trail => {
+              return <Marker 
+                name={trail.name}
+                position={{lat: trail.latitude, lng: trail.longitude}}
+                onClick={console.log(trail.name)}
+              />
+            })}
+            </Map>              
+          : null}
       </div>
     )
   }
 }
 
-export default Trails
+export default GoogleApiWrapper({
+  apiKey: (key.google_api)
+})(Trails)

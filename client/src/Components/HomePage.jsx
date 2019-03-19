@@ -150,15 +150,15 @@ class HomePage extends React.Component {
       // style={{backgroundImage: "linear-gradient(to bottom right, green, yellow)"}}
       return(
          <div style={{fontFamily: "Verdana"}}>
-          <div style={{margin: "auto", width: "50%", border: "10px olive", padding: "10px", backgroundColor: "green"}}>
-            <div style={{textAlign : "center"}}>
-              Let's take a hike! Your next adventure awaits!
+          <div style={{margin: "auto", width: "100%", backgroundColor: "AliceBlue", height: "60px"}}>
+            <div style={{textAlign : "center", fontWeight: 'bold', fontSize: '24px'}}>
+              Take a Hike! Your next adventure awaits!
             </div>
               <div style={{textAlign : "center"}}>
-              <button onClick={this.getHomePage}> Homepage </button>
-              <button onClick={this.getTrailsInformation}> All Hikes </button>
-              <button onClick={this.getCurrentHike}>Hike</button> 
-              <button onClick={this.planTrip}>Plan your next trip</button>
+              <button onClick={this.getHomePage} className="homeButton"> Homepage </button>
+              <button onClick={this.getTrailsInformation} className="homeButton"> All Hikes </button>
+              <button onClick={this.getCurrentHike} className="homeButton">Hike</button> 
+              <button onClick={this.planTrip} className="homeButton">Plan your next trip</button>
             </div>
           </div>
 
@@ -172,34 +172,34 @@ class HomePage extends React.Component {
               </form>
                : null
             }
-
-
-            <br/>
-            Hiking Facts!
-            {facts.map(fact => {
-              return <li>{fact}</li>
-            })}
-
-            <div style={{float: "right", margin: "auto", border: "5px solid black", padding: "10px"}}>
-              <form>
-                Want to find a new trail?
-                <div><label style={{float: "left"}}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={{float: "right"}}></input></div>
                 <br/>
-                <div><label style={{float: "left"}}>Latitude</label><input type="text" id="lat" onChange={this.getNewArea} style={{float: "right"}}></input></div>
-                <br/>
-                <div><label style={{float: "left"}}>Max Distance</label><input type="text" id="maxDistance" onChange={this.getNewArea} style={{float: "right"}}></input></div>
-                <br/>
-                <div><label style={{float: "left"}}>Max Results</label><input type="text" id="maxResults" onChange={this.getNewArea} style={{float: "right"}}></input></div>
-              </form>
-                <button onClick={this.getNewHikingLocation}>Get Hiking Information</button>        
-                <button onClick={this.postHikingTrails}>Save Trail Information</button>
-                {/* <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button> */}
-            </div>  
-          </div> : null
-          }
+                Hiking Facts!
+                {facts.map(fact => {
+                  return <li>{fact}</li>
+                })}
+    
+                <div style={{float: "right", margin: "auto", backgroundColor: "AliceBlue", fontWeight: "bold" }}>
+                  <form>
+                    Want to find a new trail?
+                    <div><label style={{float: "left"}}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <br/>
+                    <div><label style={{float: "left"}}>Latitude</label><input type="text" id="lat" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <br/>
+                    <div><label style={{float: "left"}}>Max Distance</label><input type="text" id="maxDistance" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                    <br/>
+                    <div><label style={{float: "left"}}>Max Results</label><input type="text" id="maxResults" onChange={this.getNewArea} style={{float: "right"}}></input></div>
+                  </form>
+                    <button onClick={this.getNewHikingLocation}>Get Hiking Information</button>        
+                    <button onClick={this.postHikingTrails}>Save Trail Information</button>
+                    {/* <button onClick={this.getHikingTrailsAPI}>Get Hiking Information</button> */}
+                </div>  
+              </div> : null
+              }
+          
+
 
           {this.state.onTrailPage === "trails" ? 
-            <Trails username={this.state.userName}/> 
+            <Trails username={this.state.userName} trails={this.state.apiReqTrails}/> 
           : null}         
 
           {this.state.onTrailPage === "next trip" ?
@@ -207,7 +207,7 @@ class HomePage extends React.Component {
               <NextTrip username={this.state.userName}/>
             </div>
           : null} 
-          {console.log(this.state.apiReqTrails)}
+          {/* {console.log(this.state.apiReqTrails)} */}
           {this.state.onTrailPage === "currentHike" ? 
           <div> 
             <CurrentTrip trails={this.state.apiReqTrails}/>

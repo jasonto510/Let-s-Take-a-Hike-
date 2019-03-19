@@ -214,14 +214,15 @@ class ShowTrails extends React.Component {
               <div> {this.state.description} </div>
             <div> Low: {this.props.trails.low} feet</div>
             <div> High: {this.props.trails.high} feet</div>
+            <div>Total Elevation Gain: {this.props.trails.high - this.props.trails.low} feet</div>
             <div onMouseOver={this.hoverLength}> Length: {this.props.trails.length} Miles </div>
-            {this.state.isHovering ? <div style={{fontWeight: 'bold'}}> Fun Fact: One mile is 5280. This trail is roughly {Math.round(this.props.trails.length * 5280)} feet. If the average person walks a mile in 15-30 minutes, it will take you a minimum of {this.props.trails.length * 15} - {this.props.trails.length * 30} minutes
+            {this.state.isHovering ? <div style={{fontWeight: 'bold'}}> Fun Fact: One mile is 5280. This trail is roughly {Math.round(this.props.trails.length * 5280)} feet. If the average person walks a mile in 15-30 minutes, it will take you a the average person {Math.round(this.props.trails.length * 15)} - {Math.round(this.props.trails.length * 30)} minutes
             </div> : null}
             </div>
             <button onClick={this.getWeatherReport} >Get Weather Report</button>
           {this.state.showWeather ? 
             <div> 
-              The temperature in {this.state.weather.city.name} is {this.state.weather.list[0].main.temp} Kelvin. It is {this.state.weather.list[0].main.sea_level} above sea level, has an atmospheric pressure of {this.state.weather.list[0].main.pressure}, humidity of {this.state.weather.list[0].main.humidity}, and {this.state.weather.list[0].weather[0].description}  
+              The temperature in {this.state.weather.city.name} is {Math.round((this.state.weather.list[0].main.temp - 273.15) * 9/5 + 32)} °F. It is {this.state.weather.list[0].main.sea_level} above sea level, has an atmospheric pressure of {this.state.weather.list[0].main.pressure}, humidity of {this.state.weather.list[0].main.humidity}, and {this.state.weather.list[0].weather[0].description}  
             </div>
             : null}
           </div>         

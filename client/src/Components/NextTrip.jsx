@@ -18,8 +18,6 @@ const customStyles = {
   };
 
 
-
-
 class NextTrip extends React.Component{
   constructor(props){
     super(props)
@@ -103,7 +101,7 @@ class NextTrip extends React.Component{
             <button onClick={this.addRecommendation} >Add</button>
           </form>
           <br/>
-          <div style={{fontWeight: "bold"}}>Gear needed before trip</div>
+          <div style={{fontWeight: "bold"}}>Gear Needed </div>
             {this.state.allGear.map(gear => {
               return <Gear gear={gear} />
             })}

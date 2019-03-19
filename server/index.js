@@ -12,7 +12,7 @@ app.use(express.static(`${__dirname}/../client/dist`))
 
 app.get('/hikingTrails', (req, res) => {
   controller.getAllTrails((err, trail) => {
-      console.log('something is owkring')
+      // console.log('something is owkring')
     if (err){
       res.status(400).end();
     }

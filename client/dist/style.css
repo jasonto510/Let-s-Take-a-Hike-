@@ -1,0 +1,29 @@
+/* html {
+    background: url(https://www.nationalgeographic.com/content/dam/expeditions/destinations/north-america/private/Yosemite/Hero-Yosemite.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+} */
+
+body {
+  background-color: #FFFAFA
+}
+
+button.homeButton {
+  width: 150px;
+}
+
+button {
+  background-color: AliceBlue;
+  border: none;
+  font-weight: bold;
+}
+
+select {
+  width: 200px;
+}
+
+input {
+  background-color: #FFFAFA;
+}

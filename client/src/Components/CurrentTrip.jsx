@@ -5,18 +5,19 @@ class CurrentTrip extends React.Component {
     super(props)
   }
 
-  componentDidMount(){
-    console.log(this.props.trails.length);
-  }
+  // componentDidMount(){
+  //   console.log(this.props.trails.length);
+  // }
+
+  
   render(){
     return(
 
       <div>
-        {this.props.trails.length > 0 ? 
+        {this.props.trails.trails ? 
           <div> 
-            Here are the trails around you
+            <div style={{fontSize: "24px"}}>Here are the trails around you </div>
             {this.props.trails.trails.map(trail => {
-                {console.log(trail.name)}
               return <li style={{fontWeight: "bold"}}>
               {trail.name}, {trail.location}: Rating {trail.stars}
               <div>{trail.summary}</div>
@@ -25,7 +26,7 @@ class CurrentTrip extends React.Component {
             Get the full report in all hikes
           </div>    
         : 
-        <div>Please go back to the homepage and enter in an area</div>
+        <div style={{fontSize: "24px"}}>Please go back to the homepage and enter in an area</div>
         }
       </div>
     )
