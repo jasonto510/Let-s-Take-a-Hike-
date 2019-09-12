@@ -102,6 +102,7 @@ class HomePage extends React.Component {
       event.preventDefault()
       let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=' + this.state.maxDistance + '&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=' + this.state.maxResults
       console.log(url)
+      // let url = 'https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200431321-f969e1a55ee2e09a435b1f478690d809'
       alert('Searching for queries')
       $.get(url, (trails) => {
         console.log(trails);
