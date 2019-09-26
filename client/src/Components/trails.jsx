@@ -28,11 +28,12 @@ class Trails extends React.Component {
 
   componentDidMount() {
     this.getHikingTrail()
+    // console.log(this.state.hikingTrails)
   }
 
   searchingForTrail(event) {
     event.preventDefault
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({
       searching: true
     })
@@ -98,12 +99,12 @@ class Trails extends React.Component {
         <div>
           <select onChange={this.getLocationInformation} className="location">
           {Object.keys(this.state.location).map(location => {
-            return <option>{location}</option>
+            return <option key={location}>{location}</option>
           })}
             </select>
             <div style={{fontWeight: 'bold', fontSize: '24px'}}>{this.state.currentLocation}</div>
-          {this.state.showTrails.map(trails => {
-            return <ShowTrails trails={trails}/>
+          {this.state.showTrails.map((trails, index) => {
+            return <ShowTrails trails={trails} key={index}/>
           })}
           <div>
             <div style={{fontWeight: 'bold', float: "left", margin: "auto"}}> 
@@ -116,7 +117,7 @@ class Trails extends React.Component {
           </div>  
         </div>
         <br/><br/><br/><br/><br/><br/><br/><br/>
-        {/* {this.state.receivedData ?
+        {this.state.receivedData ?
           <Map 
               google={this.props.google} 
               style={style}                
@@ -125,15 +126,16 @@ class Trails extends React.Component {
                 lng: this.state.trailPoints[0].longitude
               }}
               zoom={8}>
-              {this.state.trailPoints.map(trail => {
+              {this.state.trailPoints.map((trail, index) => {
               return <Marker 
                 name={trail.name}
                 position={{lat: trail.latitude, lng: trail.longitude}}
-                onClick={console.log(trail.name)}
+                // onClick={console.log(trail.name)}
+                key = {index}
               />
             })}
             </Map>              
-          : null} */}
+          : null}
       </div>
     )
   }

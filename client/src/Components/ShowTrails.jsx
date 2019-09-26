@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import key from '../../../config.js';
 import Modal from 'react-modal';
 import $ from 'jquery';
+import style from './style.css.js'
 
 const customStyles = {
   content : {
@@ -213,7 +213,7 @@ class ShowTrails extends React.Component {
             <div> High: {this.props.trails.high} feet</div>
             <div>Total Elevation Gain: {this.props.trails.high - this.props.trails.low} feet</div>
             <div onMouseOver={this.hoverLength}> Length: {this.props.trails.length} Miles </div>
-            {this.state.isHovering ? <div style={{fontWeight: 'bold'}}> Fun Fact: One mile is 5280. This trail is roughly {Math.round(this.props.trails.length * 5280)} feet. If the average person walks a mile in 15-30 minutes, it will take you a the average person {Math.round(this.props.trails.length * 15)} - {Math.round(this.props.trails.length * 30)} minutes
+            {this.state.isHovering ? <div style={style.bold}> Fun Fact: One mile is 5280. This trail is roughly {Math.round(this.props.trails.length * 5280)} feet. If the average person walks a mile in 15-30 minutes, it will take you a the average person {Math.round(this.props.trails.length * 15)} - {Math.round(this.props.trails.length * 30)} minutes
             </div> : null}
             </div>
           {this.state.showWeather ? 
@@ -229,7 +229,6 @@ class ShowTrails extends React.Component {
   }
 }
 
-// export default ShowTrails
 export default GoogleApiWrapper({
   apiKey: (key.google_api)
 })(ShowTrails)

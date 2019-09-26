@@ -1,5 +1,5 @@
 import React from 'react'
-
+import style from './style.css.js'
 
 class Gear extends React.Component {
   constructor(props){
@@ -54,7 +54,7 @@ class Gear extends React.Component {
       <div>
         <div>
           <li onClick={this.gotGear} style={this.state.strikethrough}>{this.state.gear}</li> 
-          <button style={{float: "right"}} onClick={this.editDescription}>Edit</button> 
+          <button style={style.rightFloat} onClick={this.editDescription}>Edit</button> 
             {this.state.description ? 
               <form>
               <input type="text" value={this.state.gear} onChange={this.editGear}/>

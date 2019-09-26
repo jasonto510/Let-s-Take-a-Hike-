@@ -30,16 +30,8 @@ class HomePage extends React.Component {
       this.planTrip = this.planTrip.bind(this);
       this.getCurrentHike = this.getCurrentHike.bind(this);
       this.searchTrail = this.searchTrail.bind(this);
-      // this.tryToGetTrail = this.tryToGetTrail.bind(this);
     }
 
-    // tryToGetTrail(event){
-    //   event.preventDefault();
-    //   // let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=' + this.state.maxDistance + '&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=' + this.state.maxResults
-    //   // $.get(`http://localhost:3001/getTheTrail/${this.state.lat}/${this.state.long}/${this.state.maxDistance}/${this.state.maxResults}`, (data) => {
-    //   //   console.log('this isnt breaking')
-    //   // })
-    // }
 
     getCurrentHike(event){
       event.preventDefault();
@@ -64,7 +56,6 @@ class HomePage extends React.Component {
 
     getUserName(event){
       event.preventDefault();
-      console.log(this.state.userName)
       this.setState({
           userName: event.target.value
       })
@@ -84,7 +75,6 @@ class HomePage extends React.Component {
 
     getTrailsInformation(event){
       event.preventDefault();
-      console.log('this worked');
       this.setState({
         onTrailPage: "trails"
       })
@@ -101,11 +91,7 @@ class HomePage extends React.Component {
     getNewHikingLocation(event){
       event.preventDefault()
       let url = 'https://www.hikingproject.com/data/get-trails?lat=' + this.state.lat + '&lon=' + this.state.long + '&maxDistance=' + this.state.maxDistance + '&key=200431321-f969e1a55ee2e09a435b1f478690d809&maxResults=' + this.state.maxResults
-      console.log(url)
-      // let url = 'https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200431321-f969e1a55ee2e09a435b1f478690d809'
-      alert('Searching for queries')
       $.get(url, (trails) => {
-        console.log(trails);
         this.setState({
           apiReqTrails : trails
         })
@@ -115,7 +101,7 @@ class HomePage extends React.Component {
 
     postHikingTrails(event){
       event.preventDefault();
-      console.log(this.state.apiReqTrails)
+      // console.log(this.state.apiReqTrails)
       let hikingData = this.state.apiReqTrails;
       let hikingTrails = hikingData.trails
       for (var i = 0; i < hikingTrails.length; i++) {
@@ -140,7 +126,6 @@ class HomePage extends React.Component {
           contentType: "application/json",
           data: JSON.stringify(newTrail),
           success: function(newTrail) {
-            console.log(`${newTrail} saved to db`)
             alert("Trails are now available")
           }
         })        
@@ -157,7 +142,6 @@ class HomePage extends React.Component {
 
     render() {
    
-      // style={{backgroundImage: "linear-gradient(to bottom right, green, yellow)"}}
       return(
          <div style={style.font}>
           <div style={style.header}>
@@ -183,15 +167,16 @@ class HomePage extends React.Component {
                 <br/>
                 Hiking Facts!
                 {facts.map(fact => {
-                  return <li>{fact}</li>
+                  
+                  return <li key={fact}>{fact}</li>
                 })}
     
                 <div style={style.newTrailContainer}>
                   <form>
                     Want to find a new trail?
-                    <div><label style={style.leftFloat}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={style.rightFloat}></input></div>
-                    <br/>
                     <div><label style={style.leftFloat}>Latitude</label><input type="text" id="lat" onChange={this.getNewArea} style={style.rightFloat}></input></div>
+                    <br/>
+                    <div><label style={style.leftFloat}>Longitude</label><input type="text" id="long" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                     <br/>
                     <div><label style={style.leftFloat}>Max Distance</label><input type="text" id="maxDistance" onChange={this.getNewArea} style={style.rightFloat}></input></div>
                     <br/>

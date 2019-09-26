@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './style.css.js'
 
 class CurrentTrip extends React.Component {
   constructor(props){
@@ -16,9 +17,9 @@ class CurrentTrip extends React.Component {
       <div>
         {this.props.trails.trails ? 
           <div> 
-            <div style={{fontSize: "24px"}}>Here are the trails around you </div>
+            <div style={style.boldFont}>Here are the trails around you </div>
             {this.props.trails.trails.map(trail => {
-              return <li style={{fontWeight: "bold"}}>
+              return <li style={style.bold} key={trail}>
               {trail.name}, {trail.location}: Rating {trail.stars}
               <div>{trail.summary}</div>
               </li>
@@ -26,7 +27,7 @@ class CurrentTrip extends React.Component {
             Get the full report in all hikes
           </div>    
         : 
-        <div style={{fontSize: "24px"}}>Please go back to the homepage and enter in an area</div>
+        <div style={style.boldFont}>Please go back to the homepage and enter in an area</div>
         }
       </div>
     )
